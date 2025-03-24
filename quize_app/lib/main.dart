@@ -55,9 +55,9 @@ class _QuizeAppState extends State {
   WidgetStateProperty<Color?> checkAnswer(int ansIndex) {
     if (selectAnsIndex != -1) {
       if (ansIndex == allQuestion[currentQuestionIndex]["corectAnswer"]) {
-        return const WidgetStatePropertyAll(Colors.green);
+        return const WidgetStatePropertyAll(Color.fromARGB(255, 163, 248, 166));
       } else if (ansIndex == selectAnsIndex) {
-        return const WidgetStatePropertyAll(Colors.red);
+        return const WidgetStatePropertyAll(Color.fromARGB(255, 237, 149, 142));
       } else {
         return const WidgetStatePropertyAll(null);
       }
@@ -65,6 +65,33 @@ class _QuizeAppState extends State {
       return const WidgetStatePropertyAll(null);
     }
   }
+
+  Widget getSign(int buttonNo) {
+    if (allQuestion[currentQuestionIndex]["corectAnswer"] == buttonNo &&
+        selectAnsIndex != -1) {
+      return const CircleAvatar(
+        backgroundColor: Color.fromARGB(255, 35, 243, 42),
+        radius: 15,
+        child: Icon(
+          Icons.check,
+          size: 20,
+        ),
+      );
+    } else if (buttonNo == selectAnsIndex) {
+      return const CircleAvatar(
+        backgroundColor: Colors.red,
+        radius: 15,
+        child: Icon(
+          Icons.close,
+          size: 20,
+        ),
+      );
+    } else {
+      return const SizedBox();
+    }
+  }
+
+  bool nextButtonPressed = false;
 
   bool questionPage = true;
   int score = 0;
@@ -84,7 +111,7 @@ class _QuizeAppState extends State {
             style: TextStyle(
                 fontWeight: FontWeight.w500, color: Colors.black, fontSize: 25),
           ),
-          backgroundColor: const Color.fromARGB(215, 33, 149, 243),
+          backgroundColor: const Color.fromARGB(214, 96, 179, 247),
           centerTitle: true,
         ),
         body: Column(
@@ -131,13 +158,13 @@ class _QuizeAppState extends State {
             // Question
 
             SizedBox(
-              width: 300,
+              width: 330,
               height: 40,
               child: Text(
                 allQuestion[currentQuestionIndex]["question"],
                 style: const TextStyle(
                     fontSize: 22,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     color: Colors.black),
               ),
             ),
@@ -151,9 +178,11 @@ class _QuizeAppState extends State {
               height: 55,
               width: 330,
               child: ElevatedButton(
-                style: ButtonStyle(backgroundColor: checkAnswer(0)),
+                style: ButtonStyle(
+                  backgroundColor: checkAnswer(0),
+                ),
                 onPressed: () {
-                   if (selectAnsIndex == -1) {
+                  if (selectAnsIndex == -1) {
                     selectAnsIndex = 0;
                     setState(() {});
                     if (selectAnsIndex ==
@@ -163,13 +192,19 @@ class _QuizeAppState extends State {
                     }
                   }
                 },
-                child: Text(
-                  "A. ${allQuestion[currentQuestionIndex]["option"][0]}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      "A. ${allQuestion[currentQuestionIndex]["option"][0]}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Spacer(),
+                    getSign(0)
+                  ],
                 ),
               ),
             ),
@@ -195,13 +230,19 @@ class _QuizeAppState extends State {
                     }
                   }
                 },
-                child: Text(
-                  "B. ${allQuestion[currentQuestionIndex]["option"][1]}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      "B. ${allQuestion[currentQuestionIndex]["option"][1]}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Spacer(),
+                    getSign(1)
+                  ],
                 ),
               ),
             ),
@@ -227,13 +268,19 @@ class _QuizeAppState extends State {
                     }
                   }
                 },
-                child: Text(
-                  "C. ${allQuestion[currentQuestionIndex]["option"][2]}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      "C. ${allQuestion[currentQuestionIndex]["option"][2]}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Spacer(),
+                    getSign(2)
+                  ],
                 ),
               ),
             ),
@@ -247,7 +294,11 @@ class _QuizeAppState extends State {
               height: 55,
               width: 330,
               child: ElevatedButton(
-                style: ButtonStyle(backgroundColor: checkAnswer(3),shadowColor:const WidgetStatePropertyAll( Color.fromARGB(255, 247, 112, 112)),overlayColor: WidgetStatePropertyAll(Colors.amber)),
+                style: ButtonStyle(
+                  backgroundColor: checkAnswer(3),
+                  shadowColor: const WidgetStatePropertyAll(
+                      Color.fromARGB(255, 247, 112, 112)),
+                ),
                 onPressed: () {
                   if (selectAnsIndex == -1) {
                     selectAnsIndex = 3;
@@ -259,13 +310,19 @@ class _QuizeAppState extends State {
                     }
                   }
                 },
-                child: Text(
-                  "D. ${allQuestion[currentQuestionIndex]["option"][3]}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      "D. ${allQuestion[currentQuestionIndex]["option"][3]}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Spacer(),
+                    getSign(3)
+                  ],
                 ),
               ),
             ),
@@ -273,9 +330,20 @@ class _QuizeAppState extends State {
               height: 5,
             ),
             const SizedBox(
-              height: 130,
+              height: 10,
             ),
-           
+            const SizedBox(
+              height: 25,
+            ),
+            (nextButtonPressed && selectAnsIndex == -1)
+                ? const Text(
+                    "Please Select Answer",
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500),
+                  )
+                : const SizedBox()
           ],
         ),
 
@@ -283,10 +351,13 @@ class _QuizeAppState extends State {
 
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-          
+            setState(() {
+              nextButtonPressed = true;
+            });
             if (selectAnsIndex != -1) {
               if (currentQuestionIndex < allQuestion.length - 1) {
                 currentQuestionIndex++;
+                nextButtonPressed = false;
                 setState(() {});
               } else {
                 questionPage = false;
@@ -295,10 +366,10 @@ class _QuizeAppState extends State {
               setState(() {});
             }
           },
-          backgroundColor: Colors.blue,
+          backgroundColor: const Color.fromARGB(255, 118, 188, 246),
           child: const Icon(
             Icons.forward,
-            color: Colors.black87,
+            color: Color.fromARGB(183, 0, 0, 0),
           ),
         ),
       );
@@ -336,9 +407,13 @@ class _QuizeAppState extends State {
                   color: Colors.green,
                 ),
               ),
-              const SizedBox(height: 10,),
-               Text(
-                (score<=3)?"Remark: Well Try":" Remark: Very Good", style: const TextStyle(fontSize: 25,fontWeight: FontWeight.w500),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                (score <= 3) ? "Remark: Well Try" : " Remark: Very Good",
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
               ),
               const SizedBox(
                 height: 10,
@@ -350,7 +425,6 @@ class _QuizeAppState extends State {
                     fontWeight: FontWeight.w800,
                     color: Colors.green),
               ),
-
             ],
           ),
         ),
@@ -359,9 +433,10 @@ class _QuizeAppState extends State {
             questionPage = true;
             currentQuestionIndex = 0;
             score = 0;
+            nextButtonPressed = false;
             setState(() {});
           },
-          backgroundColor: Colors.blue,
+          backgroundColor: const Color.fromARGB(255, 110, 184, 244),
           child: const Icon(
             Icons.restart_alt_sharp,
             color: Colors.black,
